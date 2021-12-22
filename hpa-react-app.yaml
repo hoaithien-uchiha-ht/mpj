@@ -1,0 +1,12 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hpa-my-react
+spec:
+  minReplicas: 3
+  maxReplicas: 15
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: my-react
+  targetCPUUtilizationPercentage: 60

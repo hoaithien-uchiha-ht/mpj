@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-react
+spec:
+  selector:
+    matchLabels:
+      app: my-react
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: my-react
+    spec:
+      containers:
+        - name: shop-on-offline
+          image: b1709267/shop-on-offline:2.1.2
+          imagePullPolicy: IfNotPresent
+          resources:
+           requests:
+             memory: "150Mi"
+             cpu: "250m"
+           limits:
+             memory: "400Mi"
+             cpu: "250m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-react
+spec:
+  type: NodePort
+  selector:
+    app: my-react
+  ports:
+    - name: my-react
+      port: 3000
+      targetPort: 3000
